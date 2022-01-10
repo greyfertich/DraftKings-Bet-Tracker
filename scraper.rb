@@ -13,16 +13,15 @@ game_object = JSON.parse(game_response.body)
 games = []
 live_games = []
 
-for game in game_object['events'] do
-  game_id = game['id']
-  game_name = game['name']
-  game_date = game['date']
+for game_data in game_object['events'] do
+  game_id = game_data['id']
+  game_name = game_data['name']
+  game_date = game_data['date']
 
   game = Game.new(game_id, game_name, game_date)
 
   if game.is_live?
-    for team in game['competitions'][0]['competitors'] do
-      puts "homeaway", team['homeAway']
+    for team in game_data['competitions'][0]['competitors'] do
       if team['homeAway'] == 'home'
         home_team_name = team['team']['displayName']
         home_team_id = team['team']['id']
@@ -32,8 +31,8 @@ for game in game_object['events'] do
       end
     end
 
-    home_roster_endpoint = URI("https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/#{game_id}/competitions/#{game_id}/competitors/#{home_team_id}/roster)")
-    away_roster_endpoint = URI("https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/#{game_id}/competitions/#{game_id}/competitors/#{away_team_id}/roster)")
+    home_roster_endpoint = URI("https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/#{game_id}/competitions/#{game_id}/competitors/#{home_team_id}/roster")
+    away_roster_endpoint = URI("https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/#{game_id}/competitions/#{game_id}/competitors/#{away_team_id}/roster")
 
     home_roster_response = Net::HTTP.get_response(home_roster_endpoint)
     away_roster_response = Net::HTTP.get_response(away_roster_endpoint)
@@ -44,14 +43,11 @@ for game in game_object['events'] do
     home_players = []
     away_players = []
 
-    puts game_date, home_team_name, home_roster_endpoint
-
     for player_object in home_roster_object["entries"] do
       id = player_object['playerId']
       name = player_object["displayName"]
       number = player_object["jersey"]
       home_players << Player.new(id, name, number)
-      puts name
     end
     for player_object in away_roster_object["entries"] do
       id = player_object['playerId']

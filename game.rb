@@ -11,7 +11,9 @@ class Game
   end
   def is_live?
     current_time = DateTime.now.to_time
-    return (current_time >= @date and ((current_time - @date) / 3600) <= 5)
+    chargers_game_time = DateTime.strptime("2022-01-09T20:50Z", '%Y-%m-%dT%H:%M%Z').to_time
+    # return (current_time >= @date and ((current_time - @date) / 3600) <= 5)
+    return (chargers_game_time >= @date and ((chargers_game_time - @date) / 3600) <= 5)
   end
 end
 
