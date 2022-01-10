@@ -33,9 +33,8 @@ for game in game_object['events'] do
   home_roster_response = Net::HTTP.get_response(home_roster_endpoint)
   away_roster_response = Net::HTTP.get_response(away_roster_endpoint)
 
-  home_roster_object = Net::HTTP.get_response(home_roster_response)
-  away_roster_response = Net::HTTP.get_response(away_roster_response)
-
+  home_roster_object = JSON.parse(home_roster_response.body)
+  away_roster_object = JSON.parse(away_roster_response.body)
 
   games << Game.new(game_id, game_name, game_date, home_team, away_team)
 end
