@@ -2,13 +2,12 @@ require 'date'
 require_relative 'team'
 
 class Game
+  attr_accessor :home_team, :away_team
   attr_reader :id, :name, :date, :home_team, :away_team
-  def initialize(id, name, date, home_team, away_team)
+  def initialize(id, name, date)
     @id = id
     @name = name
     @date = DateTime.strptime(date, '%Y-%m-%dT%H:%M%Z').to_time
-    @home_team = home_team
-    @away_team = away_team
   end
   def is_live?
     current_time = DateTime.now.to_time

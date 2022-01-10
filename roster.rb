@@ -1,7 +1,8 @@
 
 
 class Roster
-  def initialize(players)
+  def initialize(team, players)
+    @team = team
     @players = players
   end
 end
