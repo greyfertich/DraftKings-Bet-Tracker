@@ -1,6 +1,7 @@
 require 'uri'
 require 'net/http'
 require 'json'
+require 'nokogiri'
 require_relative 'game'
 require_relative 'team'
 require_relative 'player'
@@ -64,6 +65,7 @@ for game_data in game_object['events'] do
 
     game.home_team = home_team
     game.away_team = away_team
+
     games << game
   end
 end
@@ -72,5 +74,6 @@ for game in games do
   if game.is_live?
     puts game.name
     puts game.id
+    # game.get_rosters
   end
 end
