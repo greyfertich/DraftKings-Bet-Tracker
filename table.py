@@ -31,3 +31,28 @@ class DefensiveTable(StatTable):
     def __init__(self):
         super().__init__()
         self.columns = ["TOT", "SOLO", "SACKS", "TFL", "PD", "QB HITS", "TD"]
+
+class InterceptionTable(StatTable):
+    def __init__(self):
+        super().__init__()
+        self.columns = ["INT", "YDS", "TD"]
+
+class KickReturnTable(StatTable):
+    def __init__(self):
+        super().__init__()
+        self.columns = ["NO", "YDS", "AVG", "LONG", "TD"]
+
+class PuntReturnTable(StatTable):
+    def __init__(self):
+        super().__init__()
+        self.columns = ["NO", "YDS", "AVG", "LONG", "TD"]
+
+class KickingTable(StatTable):
+    def __init__(self):
+        super().__init__()
+        self.columns = ["FG", "PCT", "LONG", "XP", "PTS"]
+
+class PuntingTable(StatTable):
+    def __init__(self):
+        super().__init__()
+        self.columns = ["NO", "YDS", "AVG", "TB", "IN 20", "LONG"]
