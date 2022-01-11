@@ -11,11 +11,9 @@ class Espn_api:
         team_stats_response = requests.get(url_prefix + str(game_id))
         print(url_prefix + str(game_id))
         team_stats_soup = BeautifulSoup(team_stats_response.text, 'html.parser')
-        # tables = team_stats_soup.find_all("table", class_="mod-data")
-        # table_data = [cls.get_table_data(table) for table in tables]
-        table_data = cls.get_rushing_data(team_stats_soup)
-        # for table in table_data:
-        #     print(table)
+        rushing_data = cls.get_rushing_data(team_stats_soup)
+        receiving_data = cls.get_receiving_data(team_stats_soup)
+
     @classmethod
     def get_table_data(cls, table):
         tds = table.find_all("td")
@@ -40,8 +38,7 @@ class Espn_api:
         home_data_table = home_data.find("table", class_="mod-data").find("tbody")
         home_data_table_rows  = set(home_data_table.find_all("tr")).difference(home_data_table.find_all("tr", class_="highlight"))
 
-        away_table = RushingTable()
-        home_table = RushingTable()
+        rushing_table = RushingTable()
 
         for row in away_data_table_rows:
             name_data = row.find("td", class_="name")
@@ -51,7 +48,7 @@ class Espn_api:
             average = row.find("td", class_="avg").text
             touchdowns = row.find("td", class_="td").text
             long = row.find("td", class_="long").text
-            away_table.add_row([name, carries, yards, average, touchdowns, long])
+            rushing_table.add_away_row([name, carries, yards, average, touchdowns, long])
 
         for row in home_data_table_rows:
             name_data = row.find("td", class_="name")
@@ -61,15 +58,19 @@ class Espn_api:
             average = row.find("td", class_="avg").text
             touchdowns = row.find("td", class_="td").text
             long = row.find("td", class_="long").text
-            home_table.add_row([name, carries, yards, average, touchdowns, long])
+            rushing_table.add_home_row([name, carries, yards, average, touchdowns, long])
+        return rushing_table
 
-        for row in home_table.rows:
-            print(row)
+    @classmethod
+    def get_receiving_data(cls, soup):
+        receiving_data = soup.find("div", {"id":"gamepackage-receiving"})
 
-        for row in away_table.rows:
-            print(row)
+        away_data = receiving_data.find("div", class_="gamepackage-away-wrap")
+        away_data_table = away_data.find("table", class_="mod-data").find("tbody")
+        away_data_table_rows = set(away_data_table.find_all("tr")).difference(away_data_table.find_all("tr", class_="highlight"))
 
-
-
+        home_data = receiving_data.find("div", class_="gamepackage-home-wrap")
+        home_data_table = home_data.find("table", class_="mod-data").find("tbody")
+        home_data_table_rows  = set(home_data_table.find_all("tr")).difference(home_data_table.find_all("tr", class_="highlight"))
 
 Espn_api.get_team_stats(401326595)
