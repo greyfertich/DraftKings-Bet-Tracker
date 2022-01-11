@@ -1,4 +1,4 @@
-from table import Table
+from table import StatTable
 
 class RushingTable(Table):
     def __init__(self):
