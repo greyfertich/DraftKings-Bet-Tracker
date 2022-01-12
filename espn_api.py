@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from table import StatTable
 from constants import *
 from flask_restful import Resource
+import collections
 
 class Espn_api(Resource):
     global url_prefix
@@ -10,13 +11,23 @@ class Espn_api(Resource):
 
     @classmethod
     def get(cls):
-        return {'data': cls.get_team_stats(401326595)}, 200
+        return cls.convert_to_json(cls.get_team_stats(401326595)), 200
+
+    @classmethod
+    def convert_to_json(cls, data):
+        json = collections.defaultdict(dict)
+        json['table_names'] = [table.type for table_id, table in data.items()]
+        json['columns'] = [table.attributes for table_id, table in data.items()]
+        for table_id, table in data.items():
+            json['tables'][table.type + "-Home"] = table.home_rows
+            json['tables'][table.type + "-Away"] = table.away_rows
+        return json
 
     @classmethod
     def get_team_stats(cls, game_id):
         team_stats_response = requests.get(url_prefix + str(game_id))
         team_stats_soup = BeautifulSoup(team_stats_response.text, 'html.parser')
-        data = cls.get_data(team_stats_soup)
+        return cls.get_data(team_stats_soup)
 
     @classmethod
     def get_data(cls, soup):

@@ -1,6 +1,6 @@
 from constants import *
 
-class StatTable:
+class StatTable(object):
     def __init__(self):
         self.home_rows = []
         self.away_rows = []
@@ -42,60 +42,60 @@ class StatTable:
 
 class RushingTable(StatTable):
     def __init__(self):
-        super().__init__()
+        super(RushingTable, self).__init__()
         self.attributes = ["name", "car", "yds", "avg", "td", "long"]
         self.type = "Rushing"
 
 class ReceivingTable(StatTable):
     def __init__(self):
-        super().__init__()
+        super(ReceivingTable, self).__init__()
         self.attributes = ["rec", "yds", "avg", "td", "long", "tgts"]
         self.type = "Receiving"
 
 class PassingTable(StatTable):
     def __init__(self):
-        super().__init__()
+        super(PassingTable, self).__init__()
         self.attributes = ["c-att", "yds", "avg", "td", "int", "sacks", "qbr", "rtg"]
         self.type = "Passing"
 
 class FumbleTable(StatTable):
     def __init__(self):
-        super().__init__()
+        super(FumbleTable, self).__init__()
         self.attributes = ["fum", "lost", "rec"]
         self.type = "Fumble"
 
 class DefensiveTable(StatTable):
     def __init__(self):
-        super().__init__()
+        super(DefensiveTable, self).__init__()
         self.attributes = ["tot", "solo", "sacks", "tfl", "pd", "qb hts", "td"]
         self.type = "Defensive"
 
 class InterceptionTable(StatTable):
     def __init__(self):
-        super().__init__()
+        super(InterceptionTable, self).__init__()
         self.attributes = ["int", "yds", "td"]
         self.type = "Interception"
 
 class KickReturnTable(StatTable):
     def __init__(self):
-        super().__init__()
+        super(KickReturnTable, self).__init__()
         self.attributes = ["no", "yds", "avg", "long", "td"]
         self.type = "Kick Return"
 
 class PuntReturnTable(StatTable):
     def __init__(self):
-        super().__init__()
+        super(PuntReturnTable, self).__init__()
         self.attributes = ["no", "yds", "avg", "long", "td"]
         self.type = "Punt Return"
 
 class KickingTable(StatTable):
     def __init__(self):
-        super().__init__()
+        super(KickingTable, self).__init__()
         self.attributes = ["fg", "pct", "long", "xp", "pts"]
         self.type = "Kicking"
 
 class PuntingTable(StatTable):
     def __init__(self):
-        super().__init__()
+        super(PuntingTable, self).__init__()
         self.attributes = ["no", "yds", "avg", "tb", "in 20", "long"]
         self.type = "Punting"
