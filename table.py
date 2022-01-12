@@ -1,58 +1,101 @@
+from constants import *
+
 class StatTable:
     def __init__(self):
         self.home_rows = []
         self.away_rows = []
+        self.type = "Default"
+
+    def createTable(self, id):
+        if id == PASSING_ID:
+            return PassingTable()
+        elif id == RUSHING_ID:
+            return RushingTable()
+        elif id == RECEIVING_ID:
+            return ReceivingTable()
+        elif id == FUMBLE_ID:
+            return FumbleTable()
+        elif id == DEFENSIVE_ID:
+            return DefensiveTable()
+        elif id == INTERCEPTION_ID:
+            return InterceptionTable()
+        elif id == KICKRETURN_ID:
+            return KickReturnTable()
+        elif id == PUNTRETURN_ID:
+            return PuntReturnTable()
+        elif id == KICKING_ID:
+            return KickingTable()
+        elif id == PUNTING_ID:
+            return PuntingTable()
+
     def add_home_row(self, data):
         self.home_rows.append(data)
+
     def add_away_row(self, data):
         self.away_rows.append(data)
+
+    def add_empty_home_row(self):
+        self.home_rows.append("No " + self.type + " Data Available.")
+
+    def add_empty_away_row(self):
+        self.away_rows.append("No " + self.type + " Data Available.")
 
 class RushingTable(StatTable):
     def __init__(self):
         super().__init__()
-        self.columns = ["NAME", "CAR", "YDS", "AVG", "TD", "LONG"]
+        self.attributes = ["name", "car", "yds", "avg", "td", "long"]
+        self.type = "Rushing"
 
 class ReceivingTable(StatTable):
     def __init__(self):
         super().__init__()
-        self.columns = ["REC", "YDS", "AVG", "TD", "LONG", "TGTS"]
+        self.attributes = ["rec", "yds", "avg", "td", "long", "tgts"]
+        self.type = "Receiving"
 
 class PassingTable(StatTable):
     def __init__(self):
         super().__init__()
-        self.columns = ["C/ATT", "YDS", "AVG", "TD", "INT", "SACKS", "QBR", "RTG"]
+        self.attributes = ["c-att", "yds", "avg", "td", "int", "sacks", "qbr", "rtg"]
+        self.type = "Passing"
 
 class FumbleTable(StatTable):
     def __init__(self):
         super().__init__()
-        self.columns = ["FUM", "LOST", "REC"]
+        self.attributes = ["fum", "lost", "rec"]
+        self.type = "Fumble"
 
 class DefensiveTable(StatTable):
     def __init__(self):
         super().__init__()
-        self.columns = ["TOT", "SOLO", "SACKS", "TFL", "PD", "QB HITS", "TD"]
+        self.attributes = ["tot", "solo", "sacks", "tfl", "pd", "qb hts", "td"]
+        self.type = "Defensive"
 
 class InterceptionTable(StatTable):
     def __init__(self):
         super().__init__()
-        self.columns = ["INT", "YDS", "TD"]
+        self.attributes = ["int", "yds", "td"]
+        self.type = "Interception"
 
 class KickReturnTable(StatTable):
     def __init__(self):
         super().__init__()
-        self.columns = ["NO", "YDS", "AVG", "LONG", "TD"]
+        self.attributes = ["no", "yds", "avg", "long", "td"]
+        self.type = "Kick Return"
 
 class PuntReturnTable(StatTable):
     def __init__(self):
         super().__init__()
-        self.columns = ["NO", "YDS", "AVG", "LONG", "TD"]
+        self.attributes = ["no", "yds", "avg", "long", "td"]
+        self.type = "Punt Return"
 
 class KickingTable(StatTable):
     def __init__(self):
         super().__init__()
-        self.columns = ["FG", "PCT", "LONG", "XP", "PTS"]
+        self.attributes = ["fg", "pct", "long", "xp", "pts"]
+        self.type = "Kicking"
 
 class PuntingTable(StatTable):
     def __init__(self):
         super().__init__()
-        self.columns = ["NO", "YDS", "AVG", "TB", "IN 20", "LONG"]
+        self.attributes = ["no", "yds", "avg", "tb", "in 20", "long"]
+        self.type = "Punting"
