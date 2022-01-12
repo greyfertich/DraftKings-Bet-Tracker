@@ -2,10 +2,16 @@ import requests
 from bs4 import BeautifulSoup
 from table import StatTable
 from constants import *
+from flask_restful import Resource
 
-class Espn_api:
+class Espn_api(Resource):
     global url_prefix
     url_prefix = "https://www.espn.com/nfl/boxscore/_/gameId/"
+
+    @classmethod
+    def get(cls):
+        return {'data': cls.get_team_stats(401326595)}, 200
+
     @classmethod
     def get_team_stats(cls, game_id):
         team_stats_response = requests.get(url_prefix + str(game_id))
