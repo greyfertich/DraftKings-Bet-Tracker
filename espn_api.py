@@ -11,14 +11,6 @@ class Espn_api:
         team_stats_response = requests.get(url_prefix + str(game_id))
         team_stats_soup = BeautifulSoup(team_stats_response.text, 'html.parser')
         data = cls.get_data(team_stats_soup)
-        for table_id, table in data.items():
-            print("Table: " + table_id[12:].upper())
-            print("\tHome:")
-            for row in table.home_rows:
-                print("\t\t", row)
-            print("\tAway:")
-            for row in table.away_rows:
-                print("\t\t", row)
 
     @classmethod
     def get_data(cls, soup):
@@ -61,5 +53,3 @@ class Espn_api:
                 table.add_home_row([name] + [row.find("td", class_=attr).text for attr in table.attributes])
         except Exception:
             table.add_empty_home_row()
-
-Espn_api.get_team_stats(401326589)
